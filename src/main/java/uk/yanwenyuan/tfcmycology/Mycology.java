@@ -1,15 +1,7 @@
 package uk.yanwenyuan.tfcmycology;
 
-import uk.yanwenyuan.tfcmycology.client.screen.BurlapSackInventoryScreen;
-import uk.yanwenyuan.tfcmycology.client.screen.ToolSackInventoryScreen;
-import uk.yanwenyuan.tfcmycology.common.container.TFCSacksContainerTypes;
-import uk.yanwenyuan.tfcmycology.common.items.TFCSacksItems;
-import uk.yanwenyuan.tfcmycology.datagen.TFCSacksItemModels;
-import uk.yanwenyuan.tfcmycology.datagen.TFCSacksRecipes;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -22,19 +14,21 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import uk.yanwenyuan.tfcmycology.common.items.MycologyItems;
+import uk.yanwenyuan.tfcmycology.datagen.MycologyItemModels;
+import uk.yanwenyuan.tfcmycology.datagen.MycologyRecipes;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(TFCSacks.MOD_ID)
-public class TFCSacks {
+@Mod(Mycology.MOD_ID)
+public class Mycology {
     public static final String MOD_ID = "tfcsacks";
 
-    public TFCSacks() {
+    public Mycology() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         bus.addListener(this::setup);
 
-        TFCSacksItems.ITEMS.register(bus);
-        TFCSacksContainerTypes.CONTAINERS.register(bus);
+        MycologyItems.ITEMS.register(bus);
 
         MinecraftForge.EVENT_BUS.register(this);
         bus.addListener(this::addCreative);
@@ -46,10 +40,6 @@ public class TFCSacks {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(TFCSacksItems.BURLAP_SACK);
-            event.accept(TFCSacksItems.TOOL_SACK);
-        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -64,8 +54,6 @@ public class TFCSacks {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(TFCSacksContainerTypes.BURLAP_SACK_CONTAINER.get(), BurlapSackInventoryScreen::new);
-            MenuScreens.register(TFCSacksContainerTypes.TOOL_SACK_CONTAINER.get(), ToolSackInventoryScreen::new);
         }
     }
 
@@ -79,9 +67,9 @@ public class TFCSacks {
             ExistingFileHelper fileHelper = event.getExistingFileHelper();
             //CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-            generator.addProvider(event.includeServer(), new TFCSacksRecipes(packOutput));
+            generator.addProvider(event.includeServer(), new MycologyRecipes(packOutput));
 
-            generator.addProvider(event.includeClient(), new TFCSacksItemModels(packOutput, fileHelper));
+            generator.addProvider(event.includeClient(), new MycologyItemModels(packOutput, fileHelper));
 
         }
     }

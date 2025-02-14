@@ -8,19 +8,16 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
-import static uk.yanwenyuan.tfcmycology.TFCSacks.MOD_ID;
-import static uk.yanwenyuan.tfcmycology.common.items.TFCSacksItems.BURLAP_SACK;
-import static uk.yanwenyuan.tfcmycology.common.items.TFCSacksItems.TOOL_SACK;
+import static uk.yanwenyuan.tfcmycology.Mycology.MOD_ID;
 
-public class TFCSacksItemModels extends ItemModelProvider {
-    public TFCSacksItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
+public class MycologyItemModels extends ItemModelProvider {
+    public MycologyItemModels(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
-        simpleItem(BURLAP_SACK);
-        simpleItem(TOOL_SACK);
+
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> itemObject) {
